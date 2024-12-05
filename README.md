@@ -2,16 +2,18 @@
 
 This repository is a collection of the libraries I have created.
 
-## debug
+## debug.h
 
-## socket
+## getstr.h
 
-## file
+## socket.h
 
-## thread
+## file.h
 
-## sha256
+## thread.h
 
-## md5
+## sha256.h
 
-## base64
+## md5.h
+
+## base64.h
