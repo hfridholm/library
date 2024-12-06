@@ -39,6 +39,6 @@ int info_print(const char* format, ...)
 
 ## Programs
 
-### bunker
+### [bunker](https://github.com/hfridholm/bunker)
 
-### procom
+### [procom](https://github.com/hfridholm/procom)
