@@ -17,6 +17,10 @@
  *
  * int info_print(const char* format, ...)
  *
+ * int debug_file_open(const char* filepath)
+ *
+ * void debug_file_close(void)
+ *
  *
  * Uses va_list for argument parsing, like in getstr.c
  */
@@ -37,6 +41,13 @@ extern int error_print(const char* format, ...);
 
 extern int info_print(const char* format, ...);
 
+
+extern int debug_file_open(const char* filepath);
+
+extern void debug_file_close(void);
+
+extern FILE* debug_file;
+
 #endif // DEBUG_H
 
 /*
@@ -52,6 +63,8 @@ extern int info_print(const char* format, ...);
 
 #include <sys/time.h>
 #include <time.h>
+
+FILE* debug_file = NULL;
 
 /*
  * The debug format must include:
@@ -238,6 +251,8 @@ int debug_print(FILE* stream, const char* title, const char* format, ...)
 
   int amount = dbg_valist_print(stream, title, format, args);
 
+  fflush(stream);
+
   va_end(args);
 
   return amount;
@@ -256,7 +271,11 @@ int error_print(const char* format, ...)
 
   va_start(args, format);
 
-  int amount = dbg_valist_print(stderr, "\e[1;31mERROR\e[0m", format, args);
+  FILE* file = debug_file ? debug_file : stderr;
+
+  int amount = dbg_valist_print(file, "\e[1;31mERROR\e[0m", format, args);
+
+  fflush(file);
 
   va_end(args);
 
@@ -276,11 +295,51 @@ int info_print(const char* format, ...)
 
   va_start(args, format);
 
-  int amount = dbg_valist_print(stdout, "\e[1;37mINFO \e[0m", format, args);
+  FILE* file = debug_file ? debug_file : stdout;
+
+  int amount = dbg_valist_print(file, "\e[1;37mINFO \e[0m", format, args);
+
+  fflush(file);
 
   va_end(args);
 
   return amount;
 }
 
+/*
+ * Open and start printing to debug file
+ *
+ * RETURN (int status)
+ * - 0 | Success
+ * - 1 | Failed to open file
+ */
+int debug_file_open(const char* filepath)
+{
+  FILE* stream = fopen(filepath, "a");
+
+  if(!stream) return 1;
+
+  if(debug_file) fclose(debug_file);
+
+  debug_file = stream;
+
+  return 0;
+}
+
+/*
+ * Close the debug file
+ */
+void debug_file_close(void)
+{
+  if(debug_file) fclose(debug_file);
+
+  debug_file = NULL;
+}
+
 #endif // DEBUG_IMPLEMENT
+
+/*
+ * Maybe: 
+ * - Add pthread mutex locks to make global "file" thread safe
+ * - Create multiple debug files for [stderr, stdout]
+ */

@@ -31,10 +31,18 @@ int error_print(const char* format, ...)
 int info_print(const char* format, ...)
 ```
 
+```c
+int debug_file_open(const char* filepath)
+```
+
+```c
+void debug_file_close(void)
+```
+
 ## Hash (2024-12-05)
 
 ```
-178eaf1db476927db99a61a6fbba442308f8e1aca83bdafb799e925ab2adab60  debug.h
+073f1572f3ac70f7fcf45a7fecb19525c872938a9eadc61cd25ad441cf800a63  debug.h
 ```
 
 ## Programs
@@ -42,3 +50,5 @@ int info_print(const char* format, ...)
 ### [bunker](https://github.com/hfridholm/bunker)
 
 ### [procom](https://github.com/hfridholm/procom)
+
+### [korsord](https://github.com/hfridholm/korsord)
