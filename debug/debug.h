@@ -93,7 +93,7 @@ static inline char* dbg_timestr_create(char* buffer)
 
   strftime(buffer, 10, "%H:%M:%S", timeinfo);
 
-  sprintf(buffer + 8, ".%ld", timeval.tv_usec / 10000);
+  sprintf(buffer + 8, ".%02ld", timeval.tv_usec / 10000);
 
   return buffer;
 }
@@ -271,11 +271,20 @@ int error_print(const char* format, ...)
 
   va_start(args, format);
 
-  FILE* file = debug_file ? debug_file : stderr;
+  int amount;
 
-  int amount = dbg_valist_print(file, "\e[1;31mERROR\e[0m", format, args);
+  if(debug_file)
+  {
+    amount = dbg_valist_print(debug_file, "ERROR", format, args);
 
-  fflush(file);
+    fflush(debug_file);
+  }
+  else
+  {
+    amount = dbg_valist_print(stderr, "\e[1;37mERROR\e[0m", format, args);
+
+    fflush(stderr);
+  }
 
   va_end(args);
 
@@ -295,11 +304,20 @@ int info_print(const char* format, ...)
 
   va_start(args, format);
 
-  FILE* file = debug_file ? debug_file : stdout;
+  int amount;
 
-  int amount = dbg_valist_print(file, "\e[1;37mINFO \e[0m", format, args);
+  if(debug_file)
+  {
+    amount = dbg_valist_print(debug_file, "INFO", format, args);
 
-  fflush(file);
+    fflush(debug_file);
+  }
+  else
+  {
+    amount = dbg_valist_print(stdout, "\e[1;37mINFO \e[0m", format, args);
+
+    fflush(stdout);
+  }
 
   va_end(args);
 
@@ -339,7 +357,7 @@ void debug_file_close(void)
 #endif // DEBUG_IMPLEMENT
 
 /*
- * Maybe: 
+ * Maybe:
  * - Add pthread mutex locks to make global "file" thread safe
  * - Create multiple debug files for [stderr, stdout]
  */

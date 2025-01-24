@@ -15,7 +15,16 @@ int error_print(const char* format, ...)
 int info_print(const char* format, ...)
 ```
 
+```c
+int debug_file_open(const char* filepath)
+```
+
+```c
+void debug_file_close(void)
+```
+
 ## [getstr.h](getstr/)
+
 ```c
 char* getstr(const char* format, ...)
 ```
