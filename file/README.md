@@ -1,48 +1,24 @@
-# Library
+# file.h
 
-This repository is a collection of the libraries I have created.
+## Usage
 
-## [debug.h](debug/)
-
+Every source file that wants to use file.h should include the file.
 ```c
-int debug_print(FILE* stream, const char* title, const char* format, ...)
+#include "file.h"
 ```
 
+But, **only one** of the `.c` files (preferably the one with the `main` function) should define the implementation.
 ```c
-int error_print(const char* format, ...)
+#define FILE_IMPLEMENT
 ```
 
+This is how it could look like in the source file with the main function.
 ```c
-int info_print(const char* format, ...)
+#define FILE_IMPLEMENT
+#include "file.h"
 ```
 
-```c
-int debug_file_open(const char* filepath)
-```
-
-```c
-void debug_file_close(void)
-```
-
-## [getstr.h](getstr/)
-
-```c
-char* getstr(const char* format, ...)
-```
-
-## [sha256.h](sha256/)
-
-```c
-char* sha256(char hash[64], const void* message, size_t size)
-```
-
-## [md5.h](md5/)
-
-```c
-char* md5(char hash[64], const void* message, size_t size)
-```
-
-## [file.h](file/)
+## Functions
 
 ```c
 char* path_clean(char* path)
@@ -104,8 +80,20 @@ int dir_file_remove(const char* dirpath, const char* name)
 int dir_file_rename(const char* dirpath, const char* old_name, const char* new_name)
 ```
 
-## socket.h
+## Hash (2025-02-14)
 
-## thread.h
+```
+f01550770c799e91f0dd73112bcc2aa65d15a6a616192c702f7961a5930171b8  file.h
+```
 
-## base64.h
+## Programs
+
+### [hashing](https://github.com/hfridholm/hashing)
+
+### [crypto](https://github.com/hfridholm/crypto)
+
+### [bunker](https://github.com/hfridholm/bunker)
+
+### [korsord](https://github.com/hfridholm/korsord)
+
+### [passman](https://github.com/hfridholm/passman)
