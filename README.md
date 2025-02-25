@@ -104,8 +104,64 @@ int dir_file_remove(const char* dirpath, const char* name)
 int dir_file_rename(const char* dirpath, const char* old_name, const char* new_name)
 ```
 
-## socket.h
+## [rsa.h](rsa/)
 
-## thread.h
+```c
+void rsa_keys_gen(skey_t* skey, pkey_t* pkey)
+```
 
-## base64.h
+```c
+int rsa_encrypt(void* result, size_t* rsize, const void* message, size_t size, pkey_t* key)
+```
+
+```c
+int rsa_decrypt(void* result, size_t* rsize, const void* message, size_t size, skey_t* key)
+```
+
+```c
+int rsa_skey_encode(char** result, size_t* size, const skey_t* key)
+```
+
+```c
+int rsa_skey_decode(skey_t* key, const void* message, size_t size)
+```
+
+```c
+int rsa_pkey_encode(char** result, size_t* size, const pkey_t* key)
+```
+
+```c
+int rsa_pkey_decode(pkey_t* key, const void* message, size_t size)
+```
+
+```c
+void rsa_keys_free(skey_t* skey, pkey_t* pkey)
+```
+
+```c
+void rsa_skey_free(skey_t* key)
+```
+
+```c
+void rsa_pkey_free(pkey_t* key)
+```
+
+## [aes.h](aes/)
+
+```c
+int aes_encrypt(uint8_t** result, size_t* rsize, const void* message, size_t msize, const void* key, ksize_t ksize)
+```
+
+```c
+int aes_decrypt(uint8_t** result, size_t* rsize, const void* message, size_t msize, const void* key, ksize_t ksize)
+```
+
+## [base64.h](base64/)
+
+```c
+int base64_encode(char** result, size_t* rsize, const void* message, size_t msize)
+```
+
+```c
+int base64_decode(char** result, size_t* rsize, const void* message, size_t msize)
+```
