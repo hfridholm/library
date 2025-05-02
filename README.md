@@ -42,6 +42,14 @@ char* sha256(char hash[64], const void* message, size_t size)
 char* md5(char hash[64], const void* message, size_t size)
 ```
 
+## [socket.h](socket/)
+
+## [gui.h](gui/)
+
+## [tui.h](tui/)
+
+## [stock.h](stock/)
+
 ## [file.h](file/)
 
 ```c
